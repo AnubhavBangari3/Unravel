@@ -1,0 +1,17 @@
+{% extends 'Postfront/base1.html' %}
+{% load static %}
+
+{% block title %}
+{{profile}}
+{% endblock %}
+
+{% block body %}
+<h1 class="name my-2" style="display:flex;justify-content:center;text-align:center;">Update  Profile</h1>
+<hr>
+<div class="update my-4" style="display:flex;justify-content:center;text-align:center;flex-direction:column;">
+    <form method="post" action="" enctype="multipart/form-data">
+        {% csrf_token %} {{form.as_p}}
+        <div style="display:flex;justify-content:center;text-align:center;"><button class="btn btn-primary">Update</button></div>
+    </form>
+</div>
+{% endblock %}

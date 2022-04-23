@@ -1,0 +1,63 @@
+{% extends 'Postfront/base1.html' %}
+{% load static %}
+
+{% block title %}
+Inbox of {{profile}}
+{% endblock %}
+
+{% block body %}
+<div class="sent-message my-2" style="display:flex;justify-content:center;text-align:direction;">
+<a class="btn btn-primary"  href="{% url 'inbox' %}"><h4><b>Go back to Inbox</b></h4></a>
+</div>
+<div class="sent-message my-2" style="display:flex;justify-content:center;text-align:direction;">
+  <h1>Sent</h1>
+  </div>
+  
+
+<div class="inbox my-2">
+    
+    
+    <table class="table table-bordered table-hover my-2" style="width:60%;margin:0 auto;">
+       
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Recepient</th>
+            <th scope="col">Message sent by {{profile}}</th>
+            <th scope="col">Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for sender in sent %}
+          <tr>
+            <th scope="row">*</th>
+            <td><img src="{{sender.recepient.background.url}}" class="rounded" alt="..." style="height:100px;width:100px;">
+            <b>{{sender.recepient}} </b> </td>
+            <td>{{sender.body}}
+              <br>
+              <blockquote class="blockquote mb-0 my-2">
+                        
+                <footer class="blockquote-footer"><cite title="Source Title">{{sender.created}}</cite></footer>
+              </blockquote>
+            </td>
+            {% comment %} <td><a class="btn btn-light" href="{% url 'getSenderMessage' sender.sender.id %}">View</a></td> {% endcomment %}
+           <td style="display:flex;justify-content:center; color:red;">
+             <a  onClick="deleteMessage(`{{sender.id}}`)"><i class="fa fa-trash fa-2x" aria-hidden="true"></i>
+             </a>
+           </td>
+         
+          {% endfor %}
+        </tbody>
+        
+ 
+      </table>
+        
+    
+
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'Postfront/friend_request.js' %}">
+
+
+</script>
+{% endblock %}

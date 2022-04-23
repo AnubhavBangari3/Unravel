@@ -1,0 +1,38 @@
+{% extends 'Postfront/base1.html' %}
+{% load static %}
+
+{% block title %}
+Searching Name {{search}}
+{% endblock %}
+
+{% block body %}
+
+<div class="searches" >
+    <h1 style="display:flex;justify-content:center;text-align:center;">Profiles with name = {{search}} </h1>
+{% if profile %}
+<div style="display:flex;flex-wrap:wrap;flex-direction:row;">
+{% for pro in profile %}
+
+<div class="result my-2 mx-2">
+    <div class="card text-white bg-dark mb-3 my-2 mx-4">
+        <div class="card-header" style="display:flex;justify-content:center;text-align:center;"><a href="{% url 'getProfile' pro.id %}" style="color:white;">{{pro.user}}</a></div>
+        <div class="card-body">
+            <img src="{{pro.background.url}}" class="card-img-top" alt="..." style="width:250px;height:250px;"
+    
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endfor %}
+
+{% else %}
+<h1>No user with name = {{search}}  available</h1>
+
+{% endif %}
+
+
+</div>
+
+{% endblock %}

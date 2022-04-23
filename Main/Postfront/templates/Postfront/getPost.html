@@ -1,0 +1,116 @@
+
+{% extends 'Postfront/base1.html' %}
+{% load static %}
+
+{% block title %}
+Post number {{post.id}}
+{% endblock %}
+
+{% block body %}
+<style>
+
+    @media (min-width:1250px){
+       
+        img{
+            width:800px !important;
+            height:600px !important;
+        }
+      
+        .image_class{
+            width:80%;
+            margin:0 auto;   
+        }
+    }
+    @media (max-width:641px){
+        .card{
+            width:100%;
+        }
+        img{
+            width:100% !important;
+            
+       
+    
+    
+    </style>
+<div class="comment_on_post" style="display:flex;justify-content:center;text-align:center;">
+    <div class="card my-4">
+   
+
+        <h5 class="card-title my-2">Author :{{post.author}}</h5>
+        <hr>
+        <div class="image_class"><img src="{{post.image.url}}" id="old_img" class="card-img-top img-fluid" alt="..."></div>
+       
+        
+        <hr>
+        <div class="card-body">
+           
+            {% comment %} <div class="btn-group my-2" role="group" aria-label="Basic example">
+                <div>
+                
+                <span>
+                <button type="button" class="btn btn-dark mx-2" onClick="LikePost(`{{post.id}}`)" value="liked">Liked</button>
+                <br><h6 id="liked${list[i].id}" ><b>Total likes  {{post.like.count}}</b></h6>
+                </span>
+                <!--
+                <i class="far fa-thumbs-up fa-3x mx-4"></i><i class="fas fa-thumbs-down fa-3x"></i>-->
+                </div>
+                
+                <div>
+            
+                    <input type="hidden" name="post" id="postID" value="{{post.id}}"/>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" onClick="EditPost(`{{post.id}}`)">Update</button>
+                    <button class="btn btn-danger" onClick="DeletePost(`{{post.id}}`)">Delete</button>
+            </div>
+                
+            </div> {% endcomment %}
+            
+            
+          
+          <p class="card-text"><b>Text</b> -{{post.text}}</p>
+          <br>
+          
+          <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              <b>COMMENT</b>
+                    </button>
+                    </h2>
+                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        <form method="POST" action="" id="commentForm">
+                        <textarea name="comment" id="comment" style="font-size: 14px;height:100px;
+                        width: 100%;"></textarea><br>
+                        <button class="btn btn-success" onClick="Comment(`{{post.id}}`)">Comment</div>
+                       </form>
+                       <hr>
+                       <br>
+                       <div class="display_comments" style="display:flex;justify-content:center;text-align:center;flex-direction:column;">
+                       
+                        {% if post.comment_post.all %} {% for c in post.comment_post.all %} 
+                        <p> <b>Comment by: <span class="badge bg-dark">{{c.user}}</span> On {{c.created}}</b>
+                            <div class="alert alert-dark" role="alert">
+                                {{c.body}}
+                              </div> </p>
+                       
+                        <hr> {% endfor %} {% else %} No comment {% endif %}
+                       </div>
+       
+                    </div>
+                    </div>
+                </div>
+                
+            </div>
+          
+        </div>
+       </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+<script type="text/javascript"src="{% static 'Postfront/comment.js' %}">
+
+
+</script>
+
+{% endblock %}

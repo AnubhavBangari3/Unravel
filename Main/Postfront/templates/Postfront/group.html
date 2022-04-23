@@ -1,0 +1,241 @@
+{% extends 'Postfront/base1.html' %}
+{% load static %}
+
+{% block title %}
+Group
+{% endblock %}
+
+{% block body %}
+<style>
+
+  @media (min-width:1250px){
+    
+      img{
+          width:800px !important;
+          height:600px !important;
+      }
+      
+      .card-img-top{
+          width:80%;
+          margin:0 auto;   
+      }
+  }
+  @media (max-width:641px){
+    
+      img{
+          width:100% !important;
+          
+      }
+      for_image_update{
+        width:100% !important;
+        
+    }
+    
+  
+  </style>
+
+<div class="group" style="display:flex;flex-direction:column;">
+    <div class="card text-center mx-2 my-4" style="width:100%">
+        <div class="card-header">
+          <h2><b>{{g.name}}</b></h2>
+        </div>
+        <div class="card-body">
+          <input type="hidden" name="owner_id" id="owner_id" value="{{g.owner.id}}"/>
+          
+          <h5 class="card-title"><b>CATEGORY - {{g.category}}</b></h5>
+          <h5 class="card-title"><b>ADMIN - {{g.owner}}</b></h5>
+          <h5 class="card-title"><b>MEMBERS - {{g.members.all.count}}</b></h5>
+          <blockquote class="blockquote mb-0">
+            <p>{{g.description}}</p>
+            <footer class="blockquote-footer"><cite title="Source Title">{{g.name}} Group Description</cite></footer>
+          </blockquote>
+        </div>
+        <div class="card-footer text-muted">
+          
+          {% if profile not in g.members.all %}
+            <button href="#" onClick="JoinGroup(`{{g.id}}`)" class="btn btn-primary">Join</button>
+          {% else %}
+          <a href="{% url 'getGroupchat' g.id %}"  class="btn btn-success mx-2">Group Chat</a>
+          <button href="#" onClick="JoinGroup(`{{g.id}}`)" class="btn btn-danger">Exit</button>
+          {% endif %}
+          
+        
+          </div>
+      </div>
+      <div id="p" style="display:flex;justify-content:center;text-align:center;">
+        {% if profile in g.members.all %}
+        <form method="POST" action="" enctype="multipart/form-data" id="groupPostForm">
+
+            
+            <input type="hidden" name="curr_user_id" id="curr_user_id" value="{{g.posted_by}}">
+            <input type="hidden" name="group_id"  id="group_id" value="{{g.id}}"/>
+            <div class="posting_data">
+                <div class="form-group">
+                    <input type="textarea" name="group_posting_text"  id="group_posting_text" placeholder="Write something .."
+                    style="width:350px;height:80px;">
+                </div>
+                <br>
+                <div class="form-group">
+                    <label id="posting_images">Upload Photo</label>
+                    <input type="file" name="group_posting_image" id="group_posting_image">
+                </div>
+                <br>
+               
+            </div>
+            <br>
+            <button class="btn btn-dark" id="groupPost" onClick="GroupPost(`{{g.id}}`)">POST</button>
+        </form>
+        {% else %}
+        <h4>You need to join the group for posting</h4>
+        {% endif %}
+    </div>
+<hr>
+    <div class="group_post my-4" style="display:flex;justify-content:center;text-align:center;flex-direction:column;">
+      
+      {% for p in posts %}
+      
+      {% if p.group_post == g %}
+      <div class="card" style="width: 100%">
+        {% if profile == p.posted_by %}
+        
+        <div class="for_image_update my-2" style="display:flex;width:800px;justify-content:space-between;margin:5px auto;">
+          <h5 class="card-title my-4" style="display:flex;justify-content:center;text-align:center;">Author -{{p.posted_by}}</h5>
+          <div class="dropdown my-3">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                     
+                      <li>
+                        <button  class="dropdown-item" onClick="UpdateGroupPost(`{{p.id}}`,`{{p.group_text}}`)" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button></li>
+           
+                        
+                       <li>
+                        <button class="dropdown-item" onClick="DeleteGroupPost(`{{p.id}}`)">Delete</button> </li>
+
+                      </ul>
+          </div>
+          </div>
+        
+
+        {% else %}
+        
+
+        <div class="for_image_update my-2" style="display:flex;width:800px;justify-content:space-between;margin:5px auto;">
+          <h5 class="card-title my-4" style="display:flex;justify-content:center;text-align:center;">Author -{{p.posted_by}}</h5>
+          {% comment %} <div class="dropdown my-3">
+                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-braille"></i>
+                      </button>
+                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="rewards">
+                      <input type="hidden" name="post" id="postID" value="{{p.id}}"/>
+                      
+                     
+                      
+                      <li style="display:flex;justify-content:center;text-align:center;">
+                        <i class="fa-solid fa-chess-pawn fa-2x" class="re" value="pawn" onClick="rewardsFunction(`{{p.id}}`,'pawn')"></i>
+                      </li>
+                      <li style="display:flex;justify-content:center;text-align:center;">
+                        <i class="fa-solid fa-chess-rook fa-2x" class="re" value="rook" onClick="rewardsFunction(`{{p.id}}`,'rook')"></i>
+                      </li>
+                      <li style="display:flex;justify-content:center;text-align:center;">
+                        <i class="fa-solid fa-chess-bishop fa-2x" class="re" value="bishop" onClick="rewardsFunction(`{{p.id}}`,'bishop')"></i>
+                      </li>
+                      <li style="display:flex;justify-content:center;text-align:center;">
+                        <i class="fa-solid fa-chess-knight fa-2x" class="re" value="knight" onClick="rewardsFunction(`{{p.id}}`,'knight')"></i>
+                      </li>
+                      <li style="display:flex;justify-content:center;text-align:center;">
+                        <i class="fa-solid fa-chess-queen fa-2x" class="re" value="queen" onClick="rewardsFunction(`{{p.id}}`,'queen')"></i>
+                      </li>
+                      <li style="display:flex;justify-content:center;text-align:center;">
+                        <i class="fa-solid fa-chess-king fa-2x" class="re" value="king" onClick="rewardsFunction(`{{p.id}}`,'king')"></i>
+                      </li>
+           
+
+                      </ul>
+          </div> {% endcomment %}
+          </div>
+
+        
+          {% endif %}
+        <img src="{{p.group_image.url}}" id="group_post_image" class="card-img-top" alt="...">
+        <div class="card-body" style="display:flex;justify-content:center;text-align:center;flex-direction:column;border:2px solid grey;">
+
+          <div style="display:flex;justify-content:center;">
+           
+            <div>
+              <button class="btn btn-dark mx-4" onClick="likeGroupPost(`{{p.id}}`)">Likes</button>
+            <br><h6><b>Total likes {{p.likegp.count}} </b></h6>
+            </div>
+            <div><a href="{% url 'getGroupPost' p.id %}"><i class="fa-solid fa-comment fa-2x mx-2"></i></a>
+              <br>
+            <b>Total comments {{p.comment_gpost.count}}</b>
+            </div>
+           
+           
+            
+          </div>
+          <hr>
+            <p class="card-text">{{p.group_text}}</p>
+        </div>
+      </div>
+        
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" name="gr_id" value="{{p.id}}" id="exampleModalLabel" style="display:flex;justify-content:center;text-align:center;"><b>Update Group Post</b></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="p" style="display:flex;justify-content:center;text-align:center;">
+
+              <form method="POST" action="" enctype="multipart/form-data" id="UpdateGroupPostForm">
+      
+                  
+                  <div class="posting_data">
+                  
+                      <div class="form-group">
+                          <input type="textarea" name="updating_text" value="" id="updating_text" placeholder="Write something .."
+                          style="width:350px;height:80px;">
+                      </div>
+                      <br>
+                      <div class="form-group">
+                          <label id="updating_images">Upload Photo</label>
+                          
+                          <input type="file" name="updating_image" id="updating_image">
+                      </div>
+                      <br>
+                     
+                  </div>
+                  <br>
+                  <button class="btn btn-dark">Update</button>
+              </form>
+          </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+    {% else %}
+
+    {% endif %}
+    {% endfor %}
+   
+
+
+
+    
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script type="text/javascript"src="{% static 'Postfront/join.js' %}">
+
+
+</script>
+
+{% endblock %}

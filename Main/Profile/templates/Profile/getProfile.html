@@ -1,0 +1,139 @@
+{% extends 'Postfront/base1.html' %}
+{% load static %}
+
+{% block title %}
+{{profile}}
+{% endblock %}
+
+{% block body %}
+<style>
+    @media (min-width:1250px){
+        #cover{
+            width:800px; height:400px;
+        }
+
+    }
+    @media (max-width:1040px){
+        
+        .card-img-fluid{
+            width:100px !important;
+            height:100px !important;
+        }
+    
+    }
+@media (max-width:641px){
+    #cover{
+        width:100% !important;
+        
+    }
+    .card-img-fluid{
+        width:50px !important;
+        height:50px !important;
+    }
+
+}
+
+</style>
+<div class="profile">
+    
+    <div class="back my-2" style="display:flex;justify-content:center;text-align:center;background-color:black">
+        <div class="card bg-dark text-white">
+            <img src="{{profile.background.url}}" id="cover" class="card-img" alt="...">
+            <div class="card-img-overlay">
+                {% comment %} <img src="{{profile.main_photo.url}}" class="rounded" alt="..."> {% endcomment %}
+                
+            </div>
+          </div>
+        
+    </div>
+    <div class="prof my-4 mx-2">
+        <div class="detail" style="display:flex;justify-content:center;text-align:center; border:2px solid black;flex-wrap:wrap;">
+            <h4 class="de mx-4"><b>Username:{{profile.user}}</b></h4>
+            <h4 class="de mx-4"><b>Posts:{{post_count}}</b></h4>
+            <h4 class="de mx-4"><b>Likes Received:{{total_likes}}</b></h4>
+            <h4 class="de mx-4"><b>Comments Received:{{total_comments}}</b></h4>
+            <h4 class="de mx-4"><b>Friends:{{profile.get_friends_count}}</b></h4>
+        </div>
+        <div class="alert alert-secondary" role="alert" style="display:flex;justify-content:center;text-align:center; border:2px solid black;flex-wrap:wrap;">
+            <b><h4>Desciption :</h4></b> 
+            <p><h4>{{profile.about}}</h4></p>
+           </div>
+        <div class="friend my-2" style="display:flex;justify-content:center;text-align:center;">
+            {% comment %} {% if request.user != profile.user %} {% endcomment %}
+                {% if profile.user in sended_by and current_profile.user not in profile.friends.all  %}
+                            <button class="btn btn-secondary mx-2">Waiting</button>
+                {% endif %}
+
+                {% if current_profile.user  in profile.friends.all  %}
+                <form method="POST" action="{% url 'unfriend' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="getPro" value="{{profile.id}}">
+                    <button class="btn btn-danger mx-2">Unfriend</button>
+                </form>
+                {% endif %}
+                {% if profile.user not in sended_by and profile.user not in received_by and current_profile.user not in profile.friends.all  %}
+                    <button class="btn btn-primary mx-4" id="sendFR" value="send" onClick="sendFriendRequest(`{{profile.id}}`)">Follow</button>
+                {% endif %}
+            <button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal">Message</button>
+           
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel"><b><img src="{{profile.background.url}}" class="rounded" alt="..." style="height:100px;width:100px;">To - {{profile}}</b></h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        <form method="post" action="" id="sendingMessageForm">
+                        <textarea id="sendM" style="width:100%;height:100px;"></textarea>
+                        <br>
+                        <button class="btn btn-success" onClick="sendMessage(`{{profile.id}}`)">Send</button>
+                        </form>
+                        </div>
+                        <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        
+                        </div>
+                    </div>
+                    </div>
+                </div>
+  
+            {% comment %} {% else %}
+            
+
+            {% endif %} {% endcomment %}
+        </div>
+        <hr>
+        {% comment %} My idea is to
+        1)Show image and text posted by me
+        2)SHow visualization of likes,comment,posts,groups
+        {% endcomment %}
+        <div class="engagement" style="display:flex;justify-content:center;text-align:center;flex-direction:column;">
+            <h4><b>POSTS</b></h4>
+            <div><hr></div>
+          <div class="profile_post" style="display:flex;flex-wrap:wrap;justify-content:start;width:80%; margin:0 auto;">
+            {% for p in posts %}
+            <div class="card text-white bg-dark mb-3 mx-2 my-2">
+             <img src="{{p.image.url}}" class="card-img-fluid" alt="..." style="width:200px;height:200px;">
+             <div class="card-body">
+             
+             </div>
+           </div>
+ 
+            {% endfor %}
+          </div>
+        </div>
+        
+
+    </div>
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'Postfront/friend_request.js' %}">
+
+
+</script>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'Postfront/base1.html' %}
+{% load static %}
+
+{% block title %}
+{{group}} Group Chat
+{% endblock %}
+
+{% block body %}
+<h1 style="display:flex;justify-content:center;text-align:center;margin-top:10px;">{{group}} Group Chat Room</h1>
+<div class="groupchat my-2" style="position: relative;width:80%;margin:0 auto;height:600px;overflow-y: scroll;">
+
+  
+      <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0" style="display:flex;justify-content:center;text-align:center;flex-direction:column;">
+          {% for message in messages %}
+          <div class="card my-2">
+              
+              
+              <h6 class="card-header">By <b>{{message.sender}}</b> on {{message.created}}</h6>
+              <div class="card-body">
+                <p class="card-text"><b>{{message.message_body}}</b></p>
+                
+              </div>
+             
+            
+          </div>
+          
+
+          {% endfor %}
+        
+      </div>
+      
+
+</div>
+{% if profile in group.members.all %}
+<div class="sendSMS my-2" style="position: relative;width:80%;margin:0 auto;height:600px;">
+<form method="post" id="groupChatForm">
+    <textarea id="sendsMs" style="width:100%;height:100px;"></textarea>
+    <div style="display:flex;justify-content:center;text-align:center;">
+    <button class="btn btn-success my-2" onClick="sendGroupMessage(`{{group.id}}`)">Send</button>
+    </div>
+</form>
+</div>
+{% else %}
+
+First Join the group
+
+{% endif %}
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script type="text/javascript"src="{% static 'Postfront/join.js' %}">
+
+
+</script>
+
+{% endblock %}

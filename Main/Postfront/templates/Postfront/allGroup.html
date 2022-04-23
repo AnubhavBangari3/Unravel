@@ -1,0 +1,318 @@
+{% extends 'Postfront/base1.html' %}
+{% load static %}
+
+{% block title %}
+Groups
+{% endblock %}
+
+{% block body %}
+<div class="createGroup my-4" style="display:flex;justify-content:center;">
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Create Group
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">CREATE GROUP</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+       <form method="post" action="" id="CreateGroupForm" enctype="multipart/form-data">
+
+        <input type="input" name="titleGroup" id="titleGroup" placeholder="Group Name" style="width: 100%;" />
+        <br>
+        <label for="c">Choose a category</label>
+        <br>
+        <select name="c" id="c" style="width: 100%;margin-bottom:20px;">
+          
+                <option class="category" value="Programming">Programming</option>
+                <option class="category" value="Sports">Sports</option>
+                <option class="category" value="Entertainment">Entertainment</option>
+                <option class="category" value="Health">Health</option>
+                <option class="category" value="Fitness">Fitness</option>
+                <option class="category" value="Meditation">Meditation</option>
+                <option class="category" value="Music">Music</option>
+
+        </select> 
+        <br>
+        <input type="textarea" name="description" id="description" placeholder="Description" style="width: 100%;" />
+        <br>
+        <button type="button" class="btn btn-primary my-2" onClick="createGroup()">Create</button>
+       </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+</div>
+<div><hr></div>
+<h1 style="display:flex;justify-content:center;text-align:center;"><b>Programming</b></h1>
+<div class="groups" style="display:flex;justify-content:flex-start;text-align:center;flex-wrap:wrap;">
+  
+    {% for group in Programming %}
+    <div class="card text-center mx-2 my-4" style="width:400px;">
+        <div class="card-header">
+          <h2><b>{{group.name}}</b></h2>
+        </div>
+        <div class="card-body">
+          <input type="hidden" name="owner_id" id="owner_id" value="{{group.owner.id}}"/>
+          <input type="hidden"  id="group_id{{group.id}}" value="{{group.id}}"/>
+          <h5 class="card-title"><b>CATEGORY - {{group.category}}</b></h5>
+          <h5 class="card-title"><b>ADMIN - {{group.owner}}</b></h5>
+          <h5 class="card-title"><b>MEMBERS - {{group.members.all.count}}</b></h5>
+          <blockquote class="blockquote mb-0">
+            <p>{{group.description}}</p>
+            <footer class="blockquote-footer"><cite title="Source Title">{{group.name}} Group Description</cite></footer>
+          </blockquote>
+        </div>
+        <div class="card-footer text-muted">
+          
+          {% if profile not in group.members.all %}
+            <button href="#" onClick="JoinGroup(`{{group.id}}`)" class="btn btn-primary">Join</button>
+          {% else %}
+          <button href="#" onClick="JoinGroup(`{{group.id}}`)" class="btn btn-danger">Exit</button>
+          {% endif %}
+          
+            <button onClick="window.location.href='groups/{{group.id}}/'"class="btn btn-primary">View</button>
+        
+          </div>
+      </div>
+      {% endfor %}
+      
+</div>
+<div><hr></div>
+
+<h1 style="display:flex;justify-content:center;text-align:center;"><b>Sports</b></h1>
+<div class="groups" style="display:flex;justify-content:flex-start;text-align:center;flex-wrap:wrap;">
+  
+    {% for group in Sports %}
+    <div class="card text-center mx-2 my-4" style="width:400px;">
+        <div class="card-header">
+          <h2><b>{{group.name}}</b></h2>
+        </div>
+        <div class="card-body">
+          <input type="hidden" name="owner_id" id="owner_id" value="{{group.owner.id}}"/>
+          <input type="hidden"  id="group_id{{group.id}}" value="{{group.id}}"/>
+          <h5 class="card-title"><b>CATEGORY - {{group.category}}</b></h5>
+          <h5 class="card-title"><b>ADMIN - {{group.owner}}</b></h5>
+          <h5 class="card-title"><b>MEMBERS - {{group.members.all.count}}</b></h5>
+          <blockquote class="blockquote mb-0">
+            <p>{{group.description}}</p>
+            <footer class="blockquote-footer"><cite title="Source Title">{{group.name}} Group Description</cite></footer>
+          </blockquote>
+        </div>
+        <div class="card-footer text-muted">
+          
+          {% if profile not in group.members.all %}
+            <button href="#" onClick="JoinGroup(`{{group.id}}`)" class="btn btn-primary">Join</button>
+          {% else %}
+          <button href="#" onClick="JoinGroup(`{{group.id}}`)" class="btn btn-danger">Exit</button>
+          {% endif %}
+          
+            <button onClick="window.location.href='groups/{{group.id}}/'"class="btn btn-primary">View</button>
+        
+          </div>
+      </div>
+      {% endfor %}
+      
+</div>
+<div><hr></div>
+
+<h1 style="display:flex;justify-content:center;text-align:center;"><b>Entertainment</b></h1>
+<div class="groups" style="display:flex;justify-content:flex-start;text-align:center;flex-wrap:wrap;">
+  
+    {% for group in Entertainment %}
+    <div class="card text-center mx-2 my-4" style="width:400px;">
+        <div class="card-header">
+          <h2><b>{{group.name}}</b></h2>
+        </div>
+        <div class="card-body">
+          <input type="hidden" name="owner_id" id="owner_id" value="{{group.owner.id}}"/>
+          <input type="hidden"  id="group_id{{group.id}}" value="{{group.id}}"/>
+          <h5 class="card-title"><b>CATEGORY - {{group.category}}</b></h5>
+          <h5 class="card-title"><b>ADMIN - {{group.owner}}</b></h5>
+          <h5 class="card-title"><b>MEMBERS - {{group.members.all.count}}</b></h5>
+          <blockquote class="blockquote mb-0">
+            <p>{{group.description}}</p>
+            <footer class="blockquote-footer"><cite title="Source Title">{{group.name}} Group Description</cite></footer>
+          </blockquote>
+        </div>
+        <div class="card-footer text-muted">
+          
+          {% if profile not in group.members.all %}
+            <button href="#" onClick="JoinGroup(`{{group.id}}`)" class="btn btn-primary">Join</button>
+          {% else %}
+          <button href="#" onClick="JoinGroup(`{{group.id}}`)" class="btn btn-danger">Exit</button>
+          {% endif %}
+          
+            <button onClick="window.location.href='groups/{{group.id}}/'"class="btn btn-primary">View</button>
+        
+          </div>
+      </div>
+      {% endfor %}
+      
+</div>
+<div><hr></div>
+
+<h1 style="display:flex;justify-content:center;text-align:center;"><b>Health</b></h1>
+<div class="groups" style="display:flex;justify-content:flex-start;text-align:center;flex-wrap:wrap;">
+  
+    {% for group in Health %}
+    <div class="card text-center mx-2 my-4" style="width:400px;">
+        <div class="card-header">
+          <h2><b>{{group.name}}</b></h2>
+        </div>
+        <div class="card-body">
+          <input type="hidden" name="owner_id" id="owner_id" value="{{group.owner.id}}"/>
+          <input type="hidden"  id="group_id{{group.id}}" value="{{group.id}}"/>
+          <h5 class="card-title"><b>CATEGORY - {{group.category}}</b></h5>
+          <h5 class="card-title"><b>ADMIN - {{group.owner}}</b></h5>
+          <h5 class="card-title"><b>MEMBERS - {{group.members.all.count}}</b></h5>
+          <blockquote class="blockquote mb-0">
+            <p>{{group.description}}</p>
+            <footer class="blockquote-footer"><cite title="Source Title">{{group.name}} Group Description</cite></footer>
+          </blockquote>
+        </div>
+        <div class="card-footer text-muted">
+          
+          {% if profile not in group.members.all %}
+            <button href="#" onClick="JoinGroup(`{{group.id}}`)" class="btn btn-primary">Join</button>
+          {% else %}
+          <button href="#" onClick="JoinGroup(`{{group.id}}`)" class="btn btn-danger">Exit</button>
+          {% endif %}
+          
+            <button onClick="window.location.href='groups/{{group.id}}/'"class="btn btn-primary">View</button>
+        
+          </div>
+      </div>
+      {% endfor %}
+      
+</div>
+<div><hr></div>
+
+<h1 style="display:flex;justify-content:center;text-align:center;"><b>Fitness</b></h1>
+<div class="groups" style="display:flex;justify-content:flex-start;text-align:center;flex-wrap:wrap;">
+  
+    {% for group in Fitness %}
+    <div class="card text-center mx-2 my-4" style="width:400px;">
+        <div class="card-header">
+          <h2><b>{{group.name}}</b></h2>
+        </div>
+        <div class="card-body">
+          <input type="hidden" name="owner_id" id="owner_id" value="{{group.owner.id}}"/>
+          <input type="hidden"  id="group_id{{group.id}}" value="{{group.id}}"/>
+          <h5 class="card-title"><b>CATEGORY - {{group.category}}</b></h5>
+          <h5 class="card-title"><b>ADMIN - {{group.owner}}</b></h5>
+          <h5 class="card-title"><b>MEMBERS - {{group.members.all.count}}</b></h5>
+          <blockquote class="blockquote mb-0">
+            <p>{{group.description}}</p>
+            <footer class="blockquote-footer"><cite title="Source Title">{{group.name}} Group Description</cite></footer>
+          </blockquote>
+        </div>
+        <div class="card-footer text-muted">
+          
+          {% if profile not in group.members.all %}
+            <button href="#" onClick="JoinGroup(`{{group.id}}`)" class="btn btn-primary">Join</button>
+          {% else %}
+          <button href="#" onClick="JoinGroup(`{{group.id}}`)" class="btn btn-danger">Exit</button>
+          {% endif %}
+          
+            <button onClick="window.location.href='groups/{{group.id}}/'"class="btn btn-primary">View</button>
+        
+          </div>
+      </div>
+      {% endfor %}
+      
+</div>
+<div><hr></div>
+
+
+<h1 style="display:flex;justify-content:center;text-align:center;"><b>Meditation</b></h1>
+<div class="groups" style="display:flex;justify-content:flex-start;text-align:center;flex-wrap:wrap;">
+  
+    {% for group in Meditation %}
+    <div class="card text-center mx-2 my-4" style="width:400px;">
+        <div class="card-header">
+          <h2><b>{{group.name}}</b></h2>
+        </div>
+        <div class="card-body">
+          <input type="hidden" name="owner_id" id="owner_id" value="{{group.owner.id}}"/>
+          <input type="hidden"  id="group_id{{group.id}}" value="{{group.id}}"/>
+          <h5 class="card-title"><b>CATEGORY - {{group.category}}</b></h5>
+          <h5 class="card-title"><b>ADMIN - {{group.owner}}</b></h5>
+          <h5 class="card-title"><b>MEMBERS - {{group.members.all.count}}</b></h5>
+          <blockquote class="blockquote mb-0">
+            <p>{{group.description}}</p>
+            <footer class="blockquote-footer"><cite title="Source Title">{{group.name}} Group Description</cite></footer>
+          </blockquote>
+        </div>
+        <div class="card-footer text-muted">
+          
+          {% if profile not in group.members.all %}
+            <button href="#" onClick="JoinGroup(`{{group.id}}`)" class="btn btn-primary">Join</button>
+          {% else %}
+          <button href="#" onClick="JoinGroup(`{{group.id}}`)" class="btn btn-danger">Exit</button>
+          {% endif %}
+          
+            <button onClick="window.location.href='groups/{{group.id}}/'"class="btn btn-primary">View</button>
+        
+          </div>
+      </div>
+      {% endfor %}
+      
+</div>
+<div><hr></div>
+
+<h1 style="display:flex;justify-content:center;text-align:center;"><b>Music</b></h1>
+<div class="groups" style="display:flex;justify-content:flex-start;text-align:center;flex-wrap:wrap;">
+  
+    {% for group in Music %}
+    <div class="card text-center mx-2 my-4" style="width:400px;">
+        <div class="card-header">
+          <h2><b>{{group.name}}</b></h2>
+        </div>
+        <div class="card-body">
+          <input type="hidden" name="owner_id" id="owner_id" value="{{group.owner.id}}"/>
+          <input type="hidden"  id="group_id{{group.id}}" value="{{group.id}}"/>
+          <h5 class="card-title"><b>CATEGORY - {{group.category}}</b></h5>
+          <h5 class="card-title"><b>ADMIN - {{group.owner}}</b></h5>
+          <h5 class="card-title"><b>MEMBERS - {{group.members.all.count}}</b></h5>
+          <blockquote class="blockquote mb-0">
+            <p>{{group.description}}</p>
+            <footer class="blockquote-footer"><cite title="Source Title">{{group.name}} Group Description</cite></footer>
+          </blockquote>
+        </div>
+        <div class="card-footer text-muted">
+          
+          {% if profile not in group.members.all %}
+            <button href="#" onClick="JoinGroup(`{{group.id}}`)" class="btn btn-primary">Join</button>
+          {% else %}
+          <button href="#" onClick="JoinGroup(`{{group.id}}`)" class="btn btn-danger">Exit</button>
+          {% endif %}
+          
+            <button onClick="window.location.href='groups/{{group.id}}/'"class="btn btn-primary">View</button>
+        
+          </div>
+      </div>
+      {% endfor %}
+      
+</div>
+<div><hr></div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script type="text/javascript"src="{% static 'Postfront/join.js' %}">
+
+
+</script>
+
+{% endblock %}

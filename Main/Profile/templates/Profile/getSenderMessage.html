@@ -1,0 +1,71 @@
+{% extends 'Postfront/base1.html' %}
+{% load static %}
+
+{% block title %}
+Inbox of {{receipient}}
+{% endblock %}
+
+{% block body %}
+
+<div class="inbox my-2" data-bs-spy="scroll" data-bs-target="#navbar-example3" style="position: relative;width:80%;margin:0 auto;height:600px;overflow-y: scroll;">
+    
+    
+   
+
+      
+      <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" tabindex="0">
+       
+        <div class="card text-dark bg-light mb-3" >
+            <div class="card-header"><img src="{{sender.background.url}}" class="rounded mx-2" alt="..." style="height:100px;width:100px;"><b>By {{sender}}</b>
+            </div>
+            <div class="card-body" style="background-color:white;">
+           
+
+                {% for m in message %}
+             
+                <p> <b><h4 style="padding-left:10px;padding-top:10px;">{{m.body}}</h4></b></p>
+                <br>
+                <blockquote class="blockquote mb-0 my-2">
+                  
+                  <footer class="blockquote-footer"><cite title="Source Title">{{m.created}}</cite></footer>
+                </blockquote>
+              <hr>
+              {% endfor %}
+              {% for n in message_sended_by_user %}
+                  <div class="log-user" style="background-color:lightgreen;">
+                  <p> <b><h4 style="padding-left:10px;padding-top:10px;">{{n.body}}</h4></b></p>
+                    <br>
+                    <blockquote class="blockquote mb-0 my-2">
+                      
+                      <footer class="blockquote-footer"><cite title="Source Title">{{n.created}}</cite></footer>
+                    </blockquote>
+                  </div>
+              <hr>
+              {% endfor %} 
+              
+            </div>
+            <br>
+          
+          </div>
+          <br>
+          
+          
+      </div>
+
+</div>
+<div class="reply my-2" style="position: relative;width:80%;margin:0 auto;height:600px;"">
+
+  <form method="post" action="" id="sendingMessageForm">
+    <textarea id="sendM" style="width:100%;height:100px;"></textarea>
+    <br>
+    <button class="btn btn-success" onClick="sendMessage(`{{sender.id}}`)">Send</button>
+  </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script type="text/javascript" src="{% static 'Postfront/friend_request.js' %}">
+
+            
+
+
+</script>
+{% endblock %}
