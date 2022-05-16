@@ -41,26 +41,11 @@ class Profile(models.Model):
         self.slug=to_slug
         super().save(*args,**kwargs)
                 
-    
-    '''
-    
-    TO do 
-    
-    1)Country
-    2)Message 
-    3)Group
-    '''
+
     
     def __str__(self):
         return str(self.user.username)
-    
-    '''
-    To create models-
-    1)Friends 
-    2)Group 
-    3)Message 
-    
-    '''
+
     
 choices=(
     ('send','send'),

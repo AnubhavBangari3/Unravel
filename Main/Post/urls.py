@@ -22,7 +22,7 @@ urlpatterns=[
     path("Group/<int:pk>/comment",CommentGPPost.as_view(),name="comment_on_gp"),
     path("FriendRequest/<int:pk>",friendRequest.as_view(),name="sendfriendRequest"),
     path("sendingMessage/<int:pk>",sendMessage.as_view(),name="sendMessage"),#RewardsView
-    #path("Groups/join/post/<int:pk>/reward",RewardsView.as_view(),name="reward"),
+    path("Groups/join/post/<int:pk>/reward",RewardsView.as_view(),name="reward"),
     path("Group/<int:pk>/chat",GroupChatMessage.as_view(),name="groupchats"),
     path('',include(router.urls)),
     

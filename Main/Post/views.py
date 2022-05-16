@@ -2,14 +2,14 @@ from django.shortcuts import render, resolve_url,get_object_or_404
 from django.http import HttpResponse,JsonResponse
 
 from rest_framework.viewsets import ModelViewSet
-from .serializers import PostSerializers,LikeSerializer,JoinGroupSerializer,GroupPostSerializer,CreateGroupSerializer,LikeGroupPostSerializer,FriendRequestSerializer,CommentSerializer,CommentGpostSerializer,sendMessageSerializer,groupChatSerializer
+from .serializers import PostSerializers,LikeSerializer,JoinGroupSerializer,GroupPostSerializer,CreateGroupSerializer,LikeGroupPostSerializer,FriendRequestSerializer,CommentSerializer,CommentGpostSerializer,sendMessageSerializer,groupChatSerializer,RewardSerializer
 from rest_framework import status
 
 from rest_framework.parsers import MultiPartParser,FormParser,JSONParser
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
-from .models import Post,Liked,JoinGroup,PostGroup,LikedGroupPost,CommentOnPost,CommentOnGroupPost,GroupChat
+from .models import Post,Liked,JoinGroup,PostGroup,LikedGroupPost,CommentOnPost,CommentOnGroupPost,GroupChat,Rewards
 from Profile.models import Profile,Relationship,Message
 
 from rest_framework.decorators import api_view
@@ -137,11 +137,7 @@ class Like(APIView):
         
         return Response(serializer.data,status=status.HTTP_201_CREATED)
     
-'''
- solve group related logic till  13-2-22
- It is working fine but still I am getting an error.
- and i also need to change buttons eg when joined then exit button should be there.
- '''           
+         
 class JoinGroupView(APIView):
     serializer_class=JoinGroupSerializer
     permission_classes=[IsAuthenticated]
@@ -164,8 +160,7 @@ class JoinGroupView(APIView):
             #print("Joined the group")
         return Response({"Success":"Added"},status=status.HTTP_200_OK)
     
-# solve it by 1-3-2022. Just need to create Post ***Done
-#Add edit,delete group feature later if needed
+
 class CreateGroup(APIView):
     parser_classes = [MultiPartParser, FormParser]
     permission_classes=[IsAuthenticated]
@@ -175,7 +170,7 @@ class CreateGroup(APIView):
         
         profile=Profile.objects.get(user=request.user)
         serializer=CreateGroupSerializer(data=request.data)
-        
+        print(serializer)
         if serializer.is_valid(raise_exception=True):
             serializer.save(owner=profile)
             
@@ -204,25 +199,28 @@ class GroupPostView(APIView):
             
             #print("Not working:",serializer.errors)
             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
-        
-# class RewardsView(APIView):
-#     parser_classes = [MultiPartParser, FormParser]
-#     permission_classes=[IsAuthenticated]
+#It is working fine. But I have removed it.Instead I have used form for it now.      
+class RewardsView(APIView):
+    parser_classes = [MultiPartParser, FormParser]
+    permission_classes=[IsAuthenticated]
     
-#     def post(self,request,pk,format=None):
-#         profile=Profile.objects.get(user=request.user)
-#         gp=get_object_or_404(PostGroup,pk=pk)
-#         print(profile,gp)
-#         serializer=RewardSerializer(data=request.data)
-#         if serializer.is_valid(raise_exception=True):
-#             serializer.save(group_post=gp,person=profile)
-#             print("working:",serializer.data)
-#             print("working:",request.data)
-#             return Response(serializer.data,status=status.HTTP_200_OK)
-#         else:
+    def post(self,request,pk,format=None):
+        profile=Profile.objects.get(user=request.user)
+        gp=get_object_or_404(PostGroup,pk=pk)
+        print("Profile {}- {}".format(profile,gp))
+        serializer=RewardSerializer(data=request.data)
+        
+        #print(serializer)reward_earner
+        #print(request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(group_post=gp,person=profile)
+            print("working:",serializer.data)
+            print("working:",request.data)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        else:
             
-#             print("Not working:",serializer.errors)
-#             return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+            print("Not working:",serializer.errors)
+            return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 #Done on 27-2-2022.
 #Update
 class UpdateGroupPost(ModelViewSet):

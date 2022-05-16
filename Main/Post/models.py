@@ -67,19 +67,19 @@ class PostGroup(models.Model):
         ordering = ('-created',)
 reward=(
     ('pawn',10),
-    ('rook',35),
-    ('bishop',30),
     ('knight',20),
+    ('bishop',30),
+    ('rook',35),
     ('queen',80),
     ('king',100)
 )
-# class Rewards(models.Model):
-#     group_post=models.ForeignKey(PostGroup,on_delete=models.CASCADE,related_name='group_post_r')
-#     person=models.ForeignKey(Profile, on_delete=models.CASCADE,related_name="person")
-#     reward=models.CharField(max_length=200,choices=reward)
+class Rewards(models.Model):
+    group_post=models.ForeignKey(PostGroup,on_delete=models.CASCADE,related_name='group_post_r')
+    person=models.ForeignKey(Profile, on_delete=models.CASCADE,related_name="person")
+    reward=models.CharField(max_length=200,choices=reward)
     
-#     def __str__(self):
-#         return f"{self.person} gave {self.reward} reward"
+    def __str__(self):
+        return f"{self.person} gave {self.reward} reward"
         
 class LikedGroupPost(models.Model):
     user=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name="user_likedgrouppost",blank=True,null=True)

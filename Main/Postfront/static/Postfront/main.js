@@ -93,9 +93,13 @@ function AllPost(){
                         <div>
                         
                         <span>
-                        <button type="button" class="btn btn-dark mx-4" onClick="LikePost(${list[i].id})" value="liked">Liked</button>
-                        <br><h6 id="liked${list[i].id}" ><b>Total likes   ${list[i].total_likes}</b></h6>
+                        
+                        <button type="button" class="btn btn-dark mx-4" id="liked${list[i].id}" onClick="LikePost(${list[i].id})" value="liked">Liked</button>
+                        <br><h6><b>Total likes   ${list[i].total_likes}</b></h6>
                         </span>
+                       
+
+                        
                         <!--
                         <i class="far fa-thumbs-up fa-3x mx-4"></i><i class="fas fa-thumbs-down fa-3x"></i>-->
                         </div>
@@ -187,9 +191,9 @@ function AllPost(){
                             <div>
                            <!-- <i class="far fa-thumbs-up fa-3x mx-4"></i>-->
                            <span>
-                            <button type="button" class="btn btn-dark mx-4" onClick="LikePost(${list[i].id})" value="liked">Liked</button>
+                            <button type="button" class="btn btn-dark mx-4" id="liked${list[i].id}" onClick="LikePost(${list[i].id})" value="liked">Liked</button>
                             <br>
-                            <h6 id="liked${list[i].id}" ><b>Total likes   ${list[i].total_likes}</b></h6>
+                            <h6><b>Total likes   ${list[i].total_likes}</b></h6>
                             </span>
                             </div>
                             <div><a href="single_post/${list[i].id}"><i class="fa-solid fa-comment fa-2x mx-2"></i></a>
@@ -377,7 +381,9 @@ function DeletePost(id){
 //Form for posting like.
 //Basically I need to add 1) Change color when liked 2)Dynamic like count increase
 function LikePost(id){ 
-    console.log("Liked post no - ",id)
+    let profile=document.getElementById('curr_user_id').value;
+    let Lid = "'liked"+id+"'";
+    console.log("Liked post no - ",id,profile,Lid)
     fetch(`http://127.0.0.1:8000/Posts/${id}/like`,{
             method:'POST',
             headers:{
@@ -387,14 +393,12 @@ function LikePost(id){
         })
         .then((response) => {
             console.log("Liked")
-            putItHere = "'liked"+id+"'";
-            console.log(putItHere);
             
-            location.reload();
-            $("#putItHere").load(location.href + " #putItHere");
-            // window.onload=function(){
-            //     $("#putItHere").focus();
-            // }
+            // var but=document.getElementById('Lid');
+            // console.log(Lid,but);
+            
+          location.reload();
+           
             
         })
 }

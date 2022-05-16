@@ -213,23 +213,53 @@ function likeGroupPost(id){
             
         })
 }
-//Groups/join/post/<int:pk>/reward
-// function rewardsFunction(id,re){
-    
-//     fetch(`http://127.0.0.1:8000/Groups/join/post/${id}/reward`,{
-//         method:'POST',
-//         headers:{
-//             'X-CSRFToken':csrftoken,
-//         },
-//        body:re,
-//     })
-//     .then((response) => {
-//         console.log(id,re)
-//         //location.reload();
+//I am not using it anymore
+function rewardsFunction(id,re){
+    document.getElementById('rewardForm').addEventListener('click',function(e){
+        e.preventDefault();
+    let formData=new FormData();
+    if (re === 'pawn'){
+        formData.append('reward','pawn');
+    }
+    else if (re === 'rook'){
+        formData.append('reward','rook');
         
+    }
+    else if (re === 'bishop'){
+      
+        formData.append('reward','bishop');
+    }
+    else if (re === 'knight'){
+
+        formData.append('reward','knight');
+    }
+    else if (re === 'queen'){
         
-//     })
-// }
+        formData.append('reward','queen');
+    }
+    else{
+        formData.append('reward','king');
+    }
+    console.log(id,re);
+    fetch(`http://127.0.0.1:8000/Groups/join/post/${id}/reward`,{
+        method:'POST',
+        headers:{
+            'X-CSRFToken':csrftoken,
+        },
+       body:formData,
+    })
+    .then((response) => {
+        return response.json()
+        })
+    .then((data) => {
+        console.log(data)
+        //location.reload();   
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+    });
+}
 var scrollSpy = new bootstrap.ScrollSpy(document.body, {
     target: '#navbar-example2'
   })

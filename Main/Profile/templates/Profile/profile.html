@@ -51,11 +51,44 @@
     </div>
     <div class="prof my-4 mx-2">
         <div class="detail" style="display:flex;justify-content:center;text-align:center; border:2px solid black;flex-wrap:wrap;">
-            <h4 class="de mx-4"><b>Username:{{profile.user}}</b></h4>
-            <h4 class="de mx-4"><b>Posts:{{post_count}}</b></h4>
-            <h4 class="de mx-4"><b>Likes Received:{{total_likes}}</b></h4>
-            <h4 class="de mx-4"><b>Comments Received:{{total_comments}}</b></h4>
-            <h4 class="de mx-4"><b>Friends:{{profile.get_friends_count}}</b></h4>
+            <h4 class="de mx-4 my-2"><b>Username:{{profile.user}}</b></h4>
+            <h4 class="de mx-4 my-2"><b>Posts:{{post_count}}</b></h4>
+            <h4 class="de mx-4 my-2"><b>Likes Received:{{total_likes}}</b></h4>
+            <h4 class="de mx-4 my-2"><b>Comments Received:{{total_comments}}</b></h4>
+            <h4 class="de mx-4 my-2"><b>Friends:{{profile.get_friends_count}}</b></h4>
+            <h4 class="de mx-4 my-2"><b>Rewards Earned:{{total_rewards_earned}}</b>
+                {% if total_rewards_earned > 0 %}
+                <button type="button" class="btn btn-info mx-2" data-bs-toggle="modal" data-bs-target="#exampleModalreward">
+                View
+              </button></h4>
+              {% else %}
+
+              {% endif %}
+
+  
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalreward" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="display:flex;justify-content:center;text-align:center;">Rewards</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                {% for k,v in count_re.items %}
+                <span class="badge bg-secondary">{{k}}</span> X {{v}}
+
+                {% endfor %}
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                
+                </div>
+            </div>
+            </div>
+        </div>
+  
+            
         </div>
         <div class="alert alert-secondary" role="alert" style="display:flex;justify-content:center;text-align:center; border:2px solid black;flex-wrap:wrap;">
            <b><h4>Desciption :</h4></b> 
@@ -126,18 +159,16 @@
 
                 {% endif %}
               </div>
-            {% comment %} <div><hr></div>
-            <h4 style="width:80%; margin:0 auto;"><b>Like vs POST</b></h4>
-            <hr>
-            <div class="chart my-2" style="width:80%; margin:0 auto;">
-                <canvas id="myChart"  height="100"></canvas>
-            </div> {% endcomment %}
-            {% comment %} <hr>
-            <h4 style="width:80%; margin:0 auto;"><b>Engagement Rate</b></h4>
-            <hr>
-            <div class="chart my-2" style="width:80%; margin:0 auto;">
-                <canvas id="myChart1" style="height:400px;"></canvas>
-            </div> {% endcomment %}
+            
+        </div>
+
+        <div class="graph">
+
+            {% autoescape off %}
+               {{gantt_plot}}
+            {% endautoescape %}
+
+
         </div>
         
 
@@ -148,73 +179,5 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js">
   
 </script>
-<script>
-    //On 22-3-22 Improve 1)Visualization 2)Layout and previous issue
-    const ctx = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: [{% for post in p %} 'Post No:{{post}}', {% endfor %}],
-        datasets: [{
-            label: 'LIKES on POST',
-            data: [{% for like in l %}{{like}}, {% endfor %}],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        
-    }
-});   
 
-const ct = document.getElementById('myChart1').getContext('2d');
-const myChart1 = new Chart(ct, {
-type: 'pie',
-data: {
-    labels: ["Engagement Rate","Not"],
-    datasets: [{
-        label: 'Engagement Rate',
-        data: [{{engagement_rate}},100-{{engagement_rate}}],
-        backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-        ],
-        borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-        ],
-        borderWidth: 1
-    }]
-},
-options: {  
-    responsive: true,
-    maintainAspectRatio: false
-}
-
-});   
-</script>
 {% endblock %}

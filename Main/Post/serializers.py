@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Post,JoinGroup,PostGroup,LikedGroupPost,CommentOnPost,CommentOnGroupPost,GroupChat
+from .models import Post,JoinGroup,PostGroup,LikedGroupPost,CommentOnPost,CommentOnGroupPost,GroupChat,Rewards
 from Profile.models import Profile,Relationship,Message
 from .models import Liked
 from django.contrib.auth.models import User
@@ -62,13 +62,14 @@ class CreateGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model=JoinGroup
         fields=('name','category','owner','description',)
-        
-# class RewardSerializer(serializers.ModelSerializer):
-#     group_post=serializers.PrimaryKeyRelatedField(read_only=True)
-#     person=serializers.PrimaryKeyRelatedField(read_only=True)
-#     class Meta:
-#         model=Rewards
-#         fields=('group_post','person','reward',)
+#Not using it. I have removed it      
+class RewardSerializer(serializers.ModelSerializer):
+    group_post=serializers.PrimaryKeyRelatedField(read_only=True)
+    person=serializers.PrimaryKeyRelatedField(read_only=True)
+    
+    class Meta:
+        model=Rewards
+        fields=('group_post','person','reward',)
  
 class LikeGroupPostSerializer(serializers.ModelSerializer):
     postgroup=serializers.PrimaryKeyRelatedField(read_only=True)

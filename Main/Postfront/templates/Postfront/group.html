@@ -93,13 +93,87 @@ Group
     <div class="group_post my-4" style="display:flex;justify-content:center;text-align:center;flex-direction:column;">
       
       {% for p in posts %}
+        
       
       {% if p.group_post == g %}
-      <div class="card" style="width: 100%">
+      <div class="card my-4" style="width: 100%">
+
         {% if profile == p.posted_by %}
+
+
         
         <div class="for_image_update my-2" style="display:flex;width:800px;justify-content:space-between;margin:5px auto;">
+          
+          {% if best == p.id %}
+          
+           <h5 class="card-title my-4" style="display:flex;justify-content:center;text-align:center;">Author -{{p.posted_by}} |  <span class="badge bg-primary mx-2">Best Post</span></h5>
+
+          
+           
+          {% else %}
+
           <h5 class="card-title my-4" style="display:flex;justify-content:center;text-align:center;">Author -{{p.posted_by}}</h5>
+
+          
+         
+
+          {% endif %}
+          <!--For rewards-->
+          <div class="rewards-person my-2" style="display:flex;flex-wrap:wrap;justify-content:center;text-align:center;">
+
+            <!--
+              {% for re in rewards %}
+              {% if re.group_post.id == p.id %}
+              <div><h6 class="badge bg-secondary mx-2">{{re.reward}}</h6></div>
+
+              
+              
+              {% endif %}
+      {% endfor %}
+            -->
+            <!-- Button trigger modal -->
+            {% for k,v in ans.items %}
+                  
+              {% if k == p.id %}
+                <div>
+                  <button type="button" class="btn btn-dark my-2" data-bs-toggle="modal" data-bs-target="#reward{{p.id}}s">
+                    Rewards
+                  </button>
+                </div>
+              {% endif %}
+            {% endfor %}
+
+          <!-- Modal -->
+          <div class="modal fade" id="reward{{p.id}}s" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header"  style="display:flex;justify-content:center;text-align:center;">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Rewards earned by <b>{{p.posted_by}}</b></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  
+                  {% for k,v in ans.items %}
+                      {% if k == p.id %}
+                           {% for i in v %}
+                           <span class="badge bg-secondary mx-2 my-2">{{i}}</span>
+                           {% endfor %}
+                      {% endif %}
+                  {% endfor %}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+
+            
+          </div>
+
+          
           <div class="dropdown my-3">
                       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
 
@@ -120,40 +194,121 @@ Group
 
         {% else %}
         
+        
 
         <div class="for_image_update my-2" style="display:flex;width:800px;justify-content:space-between;margin:5px auto;">
-          <h5 class="card-title my-4" style="display:flex;justify-content:center;text-align:center;">Author -{{p.posted_by}}</h5>
-          {% comment %} <div class="dropdown my-3">
-                      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="fa-solid fa-braille"></i>
-                      </button>
-                      <ul class="dropdown-menu" aria-labelledby="dropdownMenu2" id="rewards">
-                      <input type="hidden" name="post" id="postID" value="{{p.id}}"/>
-                      
-                     
-                      
-                      <li style="display:flex;justify-content:center;text-align:center;">
-                        <i class="fa-solid fa-chess-pawn fa-2x" class="re" value="pawn" onClick="rewardsFunction(`{{p.id}}`,'pawn')"></i>
-                      </li>
-                      <li style="display:flex;justify-content:center;text-align:center;">
-                        <i class="fa-solid fa-chess-rook fa-2x" class="re" value="rook" onClick="rewardsFunction(`{{p.id}}`,'rook')"></i>
-                      </li>
-                      <li style="display:flex;justify-content:center;text-align:center;">
-                        <i class="fa-solid fa-chess-bishop fa-2x" class="re" value="bishop" onClick="rewardsFunction(`{{p.id}}`,'bishop')"></i>
-                      </li>
-                      <li style="display:flex;justify-content:center;text-align:center;">
-                        <i class="fa-solid fa-chess-knight fa-2x" class="re" value="knight" onClick="rewardsFunction(`{{p.id}}`,'knight')"></i>
-                      </li>
-                      <li style="display:flex;justify-content:center;text-align:center;">
-                        <i class="fa-solid fa-chess-queen fa-2x" class="re" value="queen" onClick="rewardsFunction(`{{p.id}}`,'queen')"></i>
-                      </li>
-                      <li style="display:flex;justify-content:center;text-align:center;">
-                        <i class="fa-solid fa-chess-king fa-2x" class="re" value="king" onClick="rewardsFunction(`{{p.id}}`,'king')"></i>
-                      </li>
-           
+          
+          {% if best == p.id %}
+          
+           <h5 class="card-title my-4" style="display:flex;justify-content:center;text-align:center;">Author -{{p.posted_by}} |  <span class="badge bg-primary mx-2">Best Post</span></h5>
 
-                      </ul>
-          </div> {% endcomment %}
+          
+          {% else %}
+
+          <h5 class="card-title my-4" style="display:flex;justify-content:center;text-align:center;">Author -{{p.posted_by}}</h5>
+          
+          {% endif %}
+
+          
+          
+          <!--For rewards-->
+          <div class="rewards-person my-2" style="display:flex;flex-wrap:wrap;justify-content:center;text-align:center;">
+
+            <!--
+              {% for re in rewards %}
+              {% if re.group_post.id == p.id %}
+              <div><h6 class="badge bg-secondary mx-2">{{re.reward}}</h6></div>
+
+              
+              
+              {% endif %}
+      {% endfor %}
+            -->
+            <!-- Button trigger modal -->
+            {% for k,v in ans.items %}
+                  
+              {% if k == p.id %}
+              <div>
+                <button type="button" class="btn btn-dark my-2" data-bs-toggle="modal" data-bs-target="#reward{{p.id}}s">
+                  Rewards
+                </button>
+              </div>
+              {% endif %}
+            {% endfor %}
+          
+          <!-- Modal -->
+          <div class="modal fade" id="reward{{p.id}}s" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header"  style="display:flex;justify-content:center;text-align:center;">
+                  <h5 class="modal-title" id="exampleModalLabel">
+                    Rewards earned by <b>{{p.posted_by}}</b></h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  {% for k,v in ans.items %}
+                  
+                      {% if k == p.id %}
+                          {% for i in v %}
+                          <span class="badge bg-secondary mx-2 my-2">{{i}}</span>
+                          {% endfor %}
+                        
+                      {% endif %}
+                  {% endfor %}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+
+            
+          </div>
+          {% comment %} <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+            Rewards
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Rewards Received</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" style="display:flex;justify-content:center;text-align:center;flex-wrap:wrap;">
+                  
+                
+                  
+                  <div class="rewards">
+                    <span class="badge bg-info text-dark">{{re.reward}}</span>
+                  </div>
+                  
+                  
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% endfor %} {% endcomment %}
+        
+            <form method="post" id="rewardForm" enctype="multipart/form-data" style="display:flex;flex-direction:row;margin-top:20px;">
+              {% csrf_token %}
+              <input type="hidden" name="post_id" value="{{p.id}}"/>
+              {{form.as_p}}
+              
+              <div><button type="submit" class="btn btn-primary mx-2">Give reward</button></div>
+  
+          </form>
+        
+
+
           </div>
 
         
@@ -162,11 +317,19 @@ Group
         <div class="card-body" style="display:flex;justify-content:center;text-align:center;flex-direction:column;border:2px solid grey;">
 
           <div style="display:flex;justify-content:center;">
+            {% if profile in p.likegp.all %}
+            <div>
+              <button class="btn btn-success mx-4" onClick="likeGroupPost(`{{p.id}}`)">Likes</button>
+            <br><h6><b>Total likes {{p.likegp.count}} </b></h6>
+            </div>
+
+            {% else %}
            
             <div>
               <button class="btn btn-dark mx-4" onClick="likeGroupPost(`{{p.id}}`)">Likes</button>
             <br><h6><b>Total likes {{p.likegp.count}} </b></h6>
             </div>
+            {% endif %}
             <div><a href="{% url 'getGroupPost' p.id %}"><i class="fa-solid fa-comment fa-2x mx-2"></i></a>
               <br>
             <b>Total comments {{p.comment_gpost.count}}</b>
@@ -185,8 +348,8 @@ Group
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" name="gr_id" value="{{p.id}}" id="exampleModalLabel" style="display:flex;justify-content:center;text-align:center;"><b>Update Group Post</b></h5>
+          <div class="modal-header" style="display:flex;justify-content:center;text-align:center;">
+            <h5 class="modal-title" name="gr_id" value="{{p.id}}" id="exampleModalLabel"><b>Update Group Post</b></h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">

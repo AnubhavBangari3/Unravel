@@ -48,11 +48,41 @@
     </div>
     <div class="prof my-4 mx-2">
         <div class="detail" style="display:flex;justify-content:center;text-align:center; border:2px solid black;flex-wrap:wrap;">
-            <h4 class="de mx-4"><b>Username:{{profile.user}}</b></h4>
-            <h4 class="de mx-4"><b>Posts:{{post_count}}</b></h4>
-            <h4 class="de mx-4"><b>Likes Received:{{total_likes}}</b></h4>
-            <h4 class="de mx-4"><b>Comments Received:{{total_comments}}</b></h4>
-            <h4 class="de mx-4"><b>Friends:{{profile.get_friends_count}}</b></h4>
+            <h4 class="de mx-4 my-2"><b>Username:{{profile.user}}</b></h4>
+            <h4 class="de mx-4 my-2"><b>Posts:{{post_count}}</b></h4>
+            <h4 class="de mx-4 my-2"><b>Likes Received:{{total_likes}}</b></h4>
+            <h4 class="de mx-4 my-2"><b>Comments Received:{{total_comments}}</b></h4>
+            <h4 class="de mx-4 my-2"><b>Friends:{{profile.get_friends_count}}</b></h4>
+            <h4 class="de mx-4 my-2"><b>Rewards Earned:{{total_rewards_earned}}</b>
+                {% if total_rewards_earned > 0 %}
+                <button type="button" class="btn btn-info mx-2" data-bs-toggle="modal" data-bs-target="#exampleModalreward">
+                View
+              </button></h4>
+              {% else %}
+
+              {% endif %}
+              
+             <!-- Modal -->
+        <div class="modal fade" id="exampleModalreward" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel" style="display:flex;justify-content:center;text-align:center;">Rewards</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                {% for k,v in count_re.items %}
+                <span class="badge bg-secondary">{{k}}</span> X {{v}}
+
+                {% endfor %}
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                
+                </div>
+            </div>
+            </div>
+        </div>
         </div>
         <div class="alert alert-secondary" role="alert" style="display:flex;justify-content:center;text-align:center; border:2px solid black;flex-wrap:wrap;">
             <b><h4>Desciption :</h4></b> 
