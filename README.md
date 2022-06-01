@@ -11,36 +11,39 @@ VISUALIZATION - Plotly
 
 # PROJECT FUNCTIONALITY
 
-User authentication
+Registered users in Unravel should be able to perform the following function –
+•	User authentication for signing in.
 
-Edit Profile
+•	Users can edit their own profile.
 
-Author of the post can update and delete that post
+•	The author of the post can update and delete their own post.
 
-Users can like the post
+•	Any user can like the posts.
 
-Users can comment on the post
+•	Any user can comment on the posts.
 
-Users can send, accept and reject friend request
+•	Users can either send, accept or reject friend requests.
 
-Users can send  and receive direct messages 
+•	Users can send direct messages to other users.
 
-Users can create Groups 
+•	Users can receive direct messages from other users.
 
-Users can join and exit the group
+•	Users can create groups on their topic of interest.
 
-Only the members of that group can post on that particular group
+•	Users can join and exit the group.
 
-Author of the post in the group can update and delete that post
+•	Only the members of that particular group can post in that group.
 
-Any user can like the posts in the group
+•	The author of the post in the group can update and delete their post.
 
-All the members of the group can give rewards to the post created by other users.
+•	Any user can like the posts in the group.
 
-Post with highest rewards in a group is the Best post.
+•	Any user can comment on the posts in the group.
 
-Any user can comment on the posts in the group
+•	Only the members of that particular group can participate in group chat.
 
-Group chat functionality
+•	Users can give rewards to posts in the group except their own posts.
+
+•	The post with the highest rewards in that particular group will get the Best Post tag.
 
 
