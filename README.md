@@ -7,7 +7,9 @@ FRONTEND – HTML, CSS, BOOTSTRAP, JAVASCRIPT
 
 DATABASE – SQLITE3 (DEFAULT DATABASE OF DJANGO)
 
-PROJECT FUNCTIONALITY
+VISUALIZATION - Plotly
+
+# PROJECT FUNCTIONALITY
 
 User authentication
 
@@ -32,6 +34,10 @@ Only the members of that group can post on that particular group
 Author of the post in the group can update and delete that post
 
 Any user can like the posts in the group
+
+All the members of the group can give rewards to the post created by other users.
+
+Post with highest rewards in a group is the Best post.
 
 Any user can comment on the posts in the group
 
