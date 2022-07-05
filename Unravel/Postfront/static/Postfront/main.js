@@ -271,13 +271,7 @@ document.getElementById('loginForm').addEventListener('submit',function(e){
     
 })
 
-//Yet to solve 1 and 2
 
-//updation is successful now
-//1)Now I need to solve the problem of undefined image if we are not updating new image
-//2)need to focus on the image that is updated after reloading.(Do this afterwards)
-//solve issue 1 and then look at the notes in paper and execute that.
-//solve issue 2 afterwards.
 let active=0;
 
 function EditPost(id){
@@ -377,9 +371,7 @@ function DeletePost(id){
     
 }
 
-//for liking post
-//Form for posting like.
-//Basically I need to add 1) Change color when liked 2)Dynamic like count increase
+
 function LikePost(id){ 
     let profile=document.getElementById('curr_user_id').value;
     let Lid = "'liked"+id+"'";

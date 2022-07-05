@@ -47,6 +47,7 @@ def register(request):
             return redirect('login')
         else:
             messages.info(request,"Fil the details")
+            return redirect("register")
     else:
         form=Signupform()
         return render(request,"signin/register.html",{'form':form})

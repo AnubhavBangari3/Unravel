@@ -310,7 +310,7 @@ def remove_friend(request):
         rel.delete()
     return redirect('suggestion')
 
-##Everything is working fine.Need to change Inbox -> Send message and received message
+
 @login_required
 def inbox(request):
     profile=Profile.objects.get(user=request.user)
