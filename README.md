@@ -1,6 +1,8 @@
 # Unravel
 PROJECT NAME – UNRAVEL(SOCIAL MEDIA WEBSITE) 
 
+Unravel is a social media website focused on creating various groups of people having similar interests.  It focuses on creating groups of different categories in order to connect people having the same interests as the group. So that they can share their knowledge with each other and thus improve.
+
 TECHNOLOGY USED – BACKEND – DJANGO , DJANGO REST FRAMEWORK (for building restful APIs)
 
 FRONTEND – HTML, CSS, BOOTSTRAP, JAVASCRIPT
