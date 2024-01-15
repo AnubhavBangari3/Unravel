@@ -42,6 +42,10 @@ Users can edit their own profiles, ensuring personalization.
 ![image](https://github.com/AnubhavBangari3/Unravel/assets/68240739/29d53007-dea9-47f5-9b40-ac14c881fd1c)
 ![image](https://github.com/AnubhavBangari3/Unravel/assets/68240739/55f1822e-446d-413c-887a-fcf9aea51932)
 
+Total rewards Earned by the user 
+![image](https://github.com/AnubhavBangari3/Unravel/assets/68240739/c501a717-dee4-4fd9-8f5b-2c35c5ea66bb)
+
+
 
 **Post Management:**
 
