@@ -7,9 +7,17 @@ Unravel is a dynamic social media platform dedicated to fostering connections am
 **Technology Stack:**
 
 **Backend:** Django, Django Rest Framework (for building restful APIs)
+
+
 **Frontend:** HTML, CSS, Bootstrap, JavaScript
+
+
 **Database:** SQLite3 (Default database of Django)
+
+
 **Visualization:** Plotly
+
+
 
 **Project Functionality:**
 Registered users on Unravel can seamlessly engage with the platform through the following functionalities:
